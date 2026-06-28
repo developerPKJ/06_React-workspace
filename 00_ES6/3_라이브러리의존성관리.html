@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라이브러리 의존성 관리</title>
+    <!-- 기존의 script 태그를 이용한 방법 -->
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    -->
+</head>
+<body>
+    
+    <h1>라이브러리 의존성 관리</h1>
+
+    <p>
+        - 기존에 외부 방식으로 .js 파일을 가져와서 쓰고자 할 때,
+          head 태그 영역에 script 태그를 이용해서 연동해서 사용했었음!! <br>
+
+        예) jQuery <br>
+
+        - 외부 방식으로 .js 파일을 가져오고자 할 때,
+          자바처럼 "import" 구문을 이용해서 .js 를 연동해서 사용할 수 있는 문법 <br> 
+          
+        - CDN 방식을 대체한다. (온라인 방식)
+    </p>
+
+    <br>
+    <hr>
+
+    <h3>* 기존의 CDN 방식 (script 태그 이용)</h3>
+
+    <p>
+        - head 영역에 script 태그를 이용해서
+          src 속성에 가져다 쓰고자 하는 .js 파일의 url 주소를 기술
+    </p>
+
+    <!-- jQuery 의 예시 -->
+
+    <button id="btn1">알림창 출력</button>
+
+    <script>
+        $(() => {
+
+            // btn1 에 클릭이벤트 부여 (jQuery 방식)
+            $("#btn1").click(() => {
+
+                alert("실행됨!!");
+            });
+        });
+    </script>
+
+    <br>
+    <hr>
+
+    <h3>* 라이브러리 의존성 관리 방식 (import 구문 이용)</h3>
+    
+    <p>
+        - 기존의 script 태그를 이용한 CDN 방식을 대체하여
+          자바처럼 "import" 구문을 이용해서 .js 파일의 url 경로를 기술
+    </p>
+
+    <button id="btn2">알림창 출력</button>
+
+    <!--   
+        단, 항상 외부 .js 모듈 (라이브러리) 을 import 로 가져오고자 할 경우에는
+        그 import 문을 감싸고있는 script 태그에 type="module" 속성을 반드시 기술해야한다!!
+    -->
+    <script type="module">
+        import "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js";
+        // > 다음 jQuery 라이브러리를 가져다 쓰겠다.
+
+        // 이 시점부터는 jQuery 구문 사용이 가능!!
+        $(() => {
+
+            $("#btn2").click(() => {
+
+                alert("실행됨~~");
+            });
+        });
+
+        // > 단, jQuery 의 경우는 script 태그로 연동해서 쓴다!!
+        //   예시로만 볼 것!!
+    </script>
+
+    <br>
+    <hr>
+
+    <h3>* 내가 직접 만든 .js 모듈을 import 해보기</h3>
+
+    <p>
+        - import 구문은 CDN 방식만 대체한다!! 오프라인 방식은 불가!! <br>
+
+        - 보안상의 이유로 내가 직접 갖고있는 .js 파일을 연동할 경우
+          접근이 막혀서 제대로 동작이 되질 않는다!! (file://) <br>
+
+        해결방법 : 이 컴퓨터를 서버로 만들자!! (http://~~~.js) <br>
+
+        <br>
+
+        * VSCode 상에서 간단히 웹서버를 구축할 수 있다!! <br>
+        - VSCode 마켓플레이스에서 "live server" 확장팩을 설치한다.
+    </p>
+
+    <br>
+
+    <button id="btn3">안녕하세요</button>
+    <button id="btn4">안녕히계세요</button>
+    <button id="btn5">변수출력</button>
+
+    <script type="module">
+        // import { sayHello } from "./resources/js/sayModule.js";
+        // > sayModule.js 파일로부터 sayHello 라는 함수를 가져다 쓰겠다. (import)
+        // > ./ : 현재 이 파일이 담겨있는 폴더
+
+        // import { sayBye } from "./resources/js/sayModule.js";
+        // > sayModule.js 파일로부터 sayBye 라는 함수를 가져다 쓰겠다. (import)
+        
+        // import { num } from "./resources/js/sayModule.js";
+        // > sayModule.js 파일로부터 num 이라는 변수를 가져다 쓰겠다. (import)
+        // > import 구문을 꼭 위에 몰아서 쓸 필요는 없다!! 중간에 써도 됨!!
+        //   (단, 가독성을 위해 최상단에 몰아서 쓰는 것을 권장한다.)
+
+        // 마찬가지로 한번에 모두 가져오기도 가능하다!!
+        // import { sayHello, sayBye, num } from "./resources/js/sayModule.js";
+
+        // 별칭을 붙여서 내보낸 경우에는 반드시 별칭으로 가져와서 사용해야 한다!!
+        // import { hi, bye, n } from "./resources/js/sayModule.js";
+        // > 마찬가지로 별칭으로 호출해서 써야 한다!!
+
+        // 다 나열하기 귀찮을 경우에는..
+        import * as say from "./resources/js/sayModule.js";
+        // > sayModule.js 파일로부터 모든걸 다 가지고 오겠다. (import *)
+        //   단, * 뒤에 반드시 as 별칭을 작성해야 한다!!
+        /*
+            내부적으로
+            let say = {
+                hi : funcion() {},
+                bye : function() {},
+                n : 1
+            };
+            객체 단위로 모듈이 전달된다!! (별칭이 곧 객체명이 됨)
+
+            - export 시
+              별칭이 안붙었을 경우 속성명이 곧 변수명, 함수명으로 셋팅됨!!
+              별칭이 붙었을 경우 속성명이 곧 별칭으로 셋팅됨!!
+        */
+
+        document.querySelector("#btn3").onclick = () => {
+
+            // sayHello("홍길동");
+            // hi("홍길동");
+            say.hi("홍길동");
+        };
+
+        document.querySelector("#btn4").onclick = () => {
+
+            // sayBye("김말똥");
+            // bye("김말똥");
+            say.bye("김말똥");
+        };
+
+        document.querySelector("#btn5").onclick = () => {
+
+            // alert(num);
+            // alert(n);
+            alert(say.n);
+        }
+
+    </script>
+
+    <br>
+    <hr>
+
+    <h3>* 클래스 단위도 export, import 할 수 있음!!</h3>
+
+    <button id="btn6">학생 정보 출력</button>
+
+    <script type="module">
+        // import { Student } from "./resources/js/Student.js";
+        // > Student.js 파일로부터 Student 클래스를 가져다 쓰겠다.
+
+        // export default 형식으로 내보낸 경우..
+        // import Student from "./resources/js/Student.js";
+        // > export default 로 내보낸 경우 중괄호 없이 기술!!
+
+        import S from "./resources/js/Student.js";
+        // > export default 로 내보낸 경우 import 시 내 마음대로 이름을 붙여서 가져다 쓸 수 있다!!
+
+        document.querySelector("#btn6").onclick = () => {
+
+            // let hong = new Student("홍길동", 20, "H강의장");
+            let hong = new S("홍길동", 20, "H강의장");
+
+            alert(hong /* .toString() */);
+        };
+    </script>
+
+</body>
+</html>

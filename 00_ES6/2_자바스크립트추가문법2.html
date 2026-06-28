@@ -3,26 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>자바스크립트 추가 문법 2</title>
+    <style>
+        div {
+            width : 500px;
+            border : 1px solid gray;
+            background-color : pink;
+        }
+    </style>
 </head>
 <body>
-    <h3>배열관련함수(순회함수)</h3>
+
+    <h1>ES6 의 추가적인 문법 2</h1>
+
+    <h3>* 객체확장표현식</h3>
+
+    <p>
+        - 객체 선언 시 "속성명 : 속성값" 을 간략하게 축약하는 문법
+    </p>
+
+    <button onclick="extendsTest();">확인하기</button>
+
+    <div id="area4"></div>
+
+    <script>
+        const extendsTest = () => {
+
+            const area4 = document.querySelector("#area4");
+            // > querySelector 를 이용해서 CSS 선택자 형식으로도 요소 선택 가능!!
+
+            let name = "홍길동";
+            let kor = 92;
+            let math = 88;
+            let eng = 100;
+
+            // 기존의 방식
+            // 위의 변수들을 학생 한명의 객체로 묶어서 표현한다면?
+            let student1 = {
+                name : name,
+                kor : kor,
+                math : math,
+                eng : eng,
+                toString : function() {
+
+                    return `${ this.name } 학생의 국어점수 : ${ this.kor }, 수학점수 : ${ this.math }, 영어점수 : ${ this.eng }`;
+                }
+            };
+
+            area4.innerHTML = "student1 : " + student1 + "<br>";
+
+            // 객체확장표현식을 이용한 방식
+            let student2 = {
+                name,
+                kor,
+                math,
+                eng,
+                toString : function() {
+
+                    return `${ this.name } 학생의 국어점수 : ${ this.kor }, 수학점수 : ${ this.math }, 영어점수 : ${ this.eng }`;
+                }
+            };
+            // > 단, 속성값으로 쓸 변수명이 속성명(키값) 과 동일할 경우에만 사용 가능!!
+
+            area4.innerHTML += "student2 : " + student2;
+        };
+    </script>
+
+    <br>
+    <hr>
+
+    <h3>* 구조분해할당</h3>
+
+    <p>
+        - 변수 선언 및 초기화 또는 swap 등을
+          배열 또는 객체 생성 구문으로 간단하게 할 수 있도록 고안된 문법 <br>
+        
+        - 객체 또는 배열의 데이터를 꺼내서 (구조 분해) 변수에 대입 (할당) 하겠다.
+    </p>
+
+    <button onclick="destructuringTest();">확인하기</button>
+
+    <div id="area5"></div>
+
+    <script>
+        const destructuringTest = () => {
+
+            // area5 요소 객체 가져오기
+            var area5 = document.querySelector("#area5");
+
+            // 배열의 경우
+            let arr1 = [10, 20];
+
+            // arr1 배열의 데이터들을 각각 변수에 할당하고싶음
+            // 기존의 방식
+            let num1 = arr1[0]; // let num1 = 10;
+            let num2 = arr1[1]; // let num2 = 20;
+            let num3 = arr1[2] || 30;
+            // > arr1[2] 에 들은 값이 없다면 || 뒤의 값을 지칭한다!!
+            //   자바스크립트에서는 || 연산자를 삼항연산자처럼 사용 가능하다!!
+
+            area5.innerHTML = `num1 : ${ num1 } <br>`;
+            area5.innerHTML += `num2 : ${ num2 } <br>`;
+            area5.innerHTML += `num3 : ${ num3 } <br>`;
+
+            // 구조분해할당을 이용한 방식
+            let [num4, num5, num6 = 30] = arr1;
+            /*
+                내부적으로
+                let num4 = arr1[0];
+                let num5 = arr1[1];
+                let num6 = 30;
+            */
+
+            area5.innerHTML += `num4 : ${ num4 } <br>`;
+            area5.innerHTML += `num5 : ${ num5 } <br>`;
+            area5.innerHTML += `num6 : ${ num6 } <br>`;
+            // > 배열의 경우는 인덱스 자릿수에 맞는 값으로 할당됨!!
+
+            area5.innerHTML += "<hr>";
+
+            // 객체의 경우
+            let obj1 = {
+                num7 : 10,
+                num8 : 20
+            }
+
+            // obj1 의 데이터들을 변수에 할당하고 싶음!!
+            // 기존의 방식
+            let num7 = obj1.num7; // let num7 = 10;
+            let num8 = obj1.num8; // let num8 = 20;
+            let num9 = obj1.num9 || 30;
+
+            area5.innerHTML += `num7 : ${ num7 } <br>`;
+            area5.innerHTML += `num8 : ${ num8 } <br>`;
+            area5.innerHTML += `num9 : ${ num9 } <br>`;
+
+            // 구조분해할당을 이용한 방식
+            let obj2 = {
+                num10 : 10,
+                num11 : 20
+            };
+
+            let {num10, num11, num12 = 30} = obj2;
+            /*
+                내부적으로
+                let num10 = obj2.num10;
+                let num11 = obj2.num11;
+                let num12 = 30;
+            */
+
+            area5.innerHTML += `num10 : ${ num10 } <br>`;
+            area5.innerHTML += `num11 : ${ num11 } <br>`;
+            area5.innerHTML += `num12 : ${ num12 } <br>`;
+            // > 객체의 경우는 속성명 (키값) 에 맞는 변수에 할당됨!!
+
+            area5.innerHTML += "<hr>";
+
+            // 객체의 경우 한가지 표현법이 더 있다.
+            let {num10 : value1, num11 : value2, value3 = 30} = obj2;
+            /*
+                내부적으로
+                let value1 = 10;
+                let value2 = 20;
+                let value3 = 30;
+            */
+
+            area5.innerHTML += `value1 : ${ value1 } <br>`;
+            area5.innerHTML += `value2 : ${ value2 } <br>`;
+            area5.innerHTML += `value3 : ${ value3 } <br>`;  
+            // > : 뒤가 변수명이 되는것!!
+
+            // ---------------------
+
+            // * swap (바꿔치기)
+            // > 두 개 이상의 변수에 각각 들었던 값을 바꿔치기 하는 것
+
+            // 기존의 방식
+            let str1 = "안녕하세요";
+            let str2 = "안녕히계세요";
+
+            console.log(str1, str2);
+
+            /*
+            str1 = str2;
+            str2 = str1;
+
+            console.log(str1, str2);
+            */
+            // > 잘못된 방법!! 변수값이 덮어씌워지기 때문!!
+
+            // swap 을 제대로 하려면 보조해주는 변수는 필수!!
+            let temp; // temporary 의 약자 (일시적인)
+            // > swap 을 도와주기 위한 임시저장소 역할의 변수 (temp / tmp)
+
+            temp = str1;
+            str1 = str2;
+            str2 = temp;
+
+            console.log(str1, str2);
+
+            console.log("---------------");
+
+            // 구조분해할당을 이용한 방식
+            let str3 = "Hello";
+            let str4 = "Goodbye";
+
+            console.log(str3, str4);
+
+            [str3, str4] = [str4, str3];
+            // > 별도의 보조해주는 변수 따위는 필요 없음!!
+
+            console.log(str3, str4);
+
+            // 실제 리액트 라이브러리에서의 사용 예시
+            let [name, setName] = ["홍길동", function(value) { name = value; }];
+
+            /*
+                내부적으로
+                let name = "홍길동";
+                let setName = function(value) {
+                    name = value;
+                };
+
+                이 시점부터 name 변수값을 바꾸고자 할 경우
+                name = "고길동"; 또는
+                setName("고길동"); 이 가능해짐!!
+            */
+        };
+    </script>
+
+    <br>
+    <hr>
+
+    <h3>* 배열관련함수 (순회함수)</h3>
+
     <!-- 배열에 반복을 돌려주는 함수들 -->
 
     <p>
-        1. forEach : 배열의 모든 인덱스에 대해 반복을 수행해주는 함수,
-        jQuery의 each 메소드와 유사한 구조
+        1. forEach : 배열의 모든 인덱스에 대해 반복을 수행해주는 함수, 
+        jQuery 의 each 메소드와 유사한 구조
         <br>
 
         2. map : forEach 함수와 마찬가지로 배열에 대한 반복을 수행하나,
-        매번 리턴되는 값을 다시 받아서 새로운 배열에 담는 구조
+        매번 리턴되는 값을 다시 받아서 새로운 배열에 차곡차곡 담아주는 구조
         <br>
-
-        3. redyce : 배열에 대한 반복을 수행할 때,
-        해당 배열의 값을 이용해서 특정값을 도출하거나 재가공할 때 사용
+        
+        3. reduce : 배열에 대한 반복을 수행할 때,
+        그 해당 배열의 값을 이용해서 특정값을 도출하거나 재가공할 때 사용
         <br>
     </p>
 
-    
+    <pre>
+        [ 표현법 ]
+
+        - 참고) jQuery 의 each 메소드
+        배열명.each(function(index, item) {
+
+            반복적으로 실행할 구문;
+        });
+        > index 에는 해당 배열의 0 ~ 마지막 인덱스가 담겨옴
+        > item 에는 index 번째 데이터가 담겨옴
+
+        1. forEach
+        배열명.forEach(function(item, index) {
+
+            반복적으로 실행할 구문;
+        });
+        > jQuery 의 each 메소드와 거의 비슷하나, 매개변수의 순서만 다르다!! 주의!!
+        > forEach 는 리턴값이 없는 함수
+
+        2. map
+        변수명 = 배열명.map(function(item, index) {
+
+            반복적으로 실행할 구문;
+
+            return 리턴할값;
+        });
+        > map 은 리턴값이 있는 함수 
+        > 최종적으로는 배열로 리턴된다!! 
+          (매번 function 마다 리턴되는 값이 새로이 배열에 차곡차곡 쌓인 뒤 그 배열이 최종 리턴)
+
+        3. reduce
+        변수명 = 배열명.reduce(function(acc, item, index) {
+
+            반복적으로 실행할 구문;
+
+            return 다음반복회차의acc값;
+        });
+        > reduce 또한 리턴값이 있는 함수
+        > 최종적으로는 단일 값으로 리턴된다!!
+          (마지막 반복 회차의 리턴값이 최종 리턴되는것)
+    </pre>
+
+    <button onclick="arrayFunctionTest();">확인하기</button>
+
+    <div id="area6"></div>
+
+    <script>
+        const arrayFunctionTest = () => {
+
+            // area6 요소 객체 가져오기
+            var area6 = document.querySelector("#area6");
+
+            // 1) forEach 함수
+            // > 배열에 단순 반복 돌리기용
+            let arr1 = ["hi", "hello", "안녕하세요", 1, true];
+
+            // 물론 for문을 이용할 수 있지만...
+            // forEach 함수를 이용해본다면
+            arr1.forEach((item, index) => {
+
+                // console.log("잘 돌아가나?");
+                // console.log(index, item);
+
+                area6.innerHTML += `${ index } 번째 데이터 : ${ item } <br>`;
+            });
+
+            area6.innerHTML += "<hr>";
+
+            // 2) map 함수
+            // > 배열에 반복 돌리기 + 새로운 배열을 만들기
+            let result1 = arr1.map((item, index) => {
+
+                // console.log(index, item);
+
+                // return 1;
+
+                let str = `${ index } 번째 값은 ${ item } 입니다. <br>`;
+                area6.innerHTML += str;
+
+                return str;
+            });
+
+            console.log(result1);
+            // > 주로 기존 배열의 값들을 한번 재가공해서 새로운 배열로 만들어내고싶을 때 사용
+
+            area6.innerHTML += "<hr>";
+
+            // 3) reduce 함수
+            // > 배열에 반복 돌리기 + 새로운 값을 계산하는 용도
+            let arr2 = [1, 2, 3, 4, 5, 6];
+
+            let result2 = arr2.reduce((acc, item, index) => {
+
+                console.log(acc, index, item);
+                
+                // return 99;
+
+                return acc + item;
+                // > 누적합 구하기!!
+            });
+            // > 기본적으로 반복 횟수가 배열의 크기 - 1 임!!
+            // > 1번 인덱스에서부터 반복이 시작됨!! 
+            //   (단, 1번 인덱스 반복 시작 시 기존 0 번 인덱스의 값이 최초 acc 값으로 주어짐)
+            // > 리턴값이 다음 반복 회차의 acc 로 들어감!! (없다면 undefined)
+
+            console.log(result2);
+            // > 마지막 반복 회차의 return 값이 reduce 함수의 최종 리턴값이 된다!!
+
+            // 실제 리액트에서 쓰일법한 예시 (map 함수)
+            let liList = arr2.map((item, index) => {
+
+                // arr2 에 담겨있던 1, 2, 3, 4, 5, 6 값을 각각
+                // li 요소로 감싼 형태로 재가공하여 배열로 만들어내고싶음!!
+
+                let liEl = `<li>${ item }</li>`;
+
+                return liEl;
+            });
+
+            console.log(liList);
+            // ["<li>", "<li>", "<li>", "<li>", ...]
+
+            let resultStr = "<ul>";
+
+            for(let i = 0; i < liList.length; i++) {
+
+                resultStr += liList[i];
+            }
+        
+            resultStr += "</ul>";
+
+            area6.innerHTML += resultStr;
+
+        };
+    </script>
+
 </body>
 </html>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

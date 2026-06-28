@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01_my_first_project</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      * 이 리액트 프로젝트를 실행하는 순간
+        메인페이지에서 제일 먼저 보여지는 화면이 이 index.html 파일임!!
+
+      * index.html
+      - SPA 를 구현하기 위한 "흰 도화지" 역할
+      - div id="root" 안쪽에 js 코드를 이용해서 화면을 계속 그려줄 예정
+      - 회원목록페이지, 게시판목록페이지, 게시판상세조회페이지, 회원가입페이지 등등..
+        모든 페이지를 이 div 안쪽에서 다 해결해야 한다!! (SPA)
+    -->
+
+    <script type="module" src="/src/main.jsx"></script>
+    <!--
+      * index.html 페이지가 브라우저에 로딩되는 순간
+        이 프로젝트 폴더의 src 의 main.jsx 파일을 불러와서 (.js 의 확장 버전이 .jsx 임)
+        그 안의 JavaScript 코드를 실행시키겠다.
+    -->
+  </body>
+</html>

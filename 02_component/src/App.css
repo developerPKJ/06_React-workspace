@@ -1,0 +1,19 @@
+#myStyle {
+  color : white;
+  background-color : yellowgreen;
+}
+
+/*
+.second {
+  color : red;
+  font-weight : bold;
+  font-size : 25px;
+  text-decoration : underline;
+}
+*/
+/*
+  - 주로 한 CSS 파일에 모든 컴포넌트에서 쓰일 스타일을 몰아서 쓰지 않는다!!
+  - 보통은 해당 컴포넌트에 대응되는 CSS 파일을 1:1 로 만들어서 1:1 로 import 해서 쓴다.
+    (.jsx 파일명과 동일한 이름의 .css 파일명으로 지어주는것을 권장)
+  - "공통 스타일" 같은 경우 App.css 내지 index.css 에서 작성한다.
+*/
