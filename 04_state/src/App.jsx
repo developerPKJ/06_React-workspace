@@ -5,10 +5,22 @@ import heroImg from './assets/hero.png'
 import './App.css'
 
 import StateComponent1 from './StateComponent1'
+import StateComponent2 from './StateComponent2'
+import StateComponent6 from './StateComponent6'
+
+import ReplyInsertComponent from './ReplyInsertComponent'
+import ReplyListComponent from './ReplyListComponent'
 
 function App() {
 
   // 실행할 구문
+  const [str, setStr] = useState("Before");
+
+  const arr = [];
+  arr.push({replyWriter : "홍길동", replyContent : "안녕하세요"});
+  arr.push({replyWriter : "김말순", replyContent : "반갑습니다"});
+  arr.push({replyWriter : "박개똥", replyContent : "잘 부탁드립니다"});
+  const [replyList, setReplyList] = useState(arr);
 
   // 리턴 구문(JSX 형식 화면 구성 부분)
   return (
@@ -32,6 +44,46 @@ function App() {
       <h3>1. State 필요성</h3>
 
       <StateComponent1 />
+
+      <br />
+      <hr />
+
+      <h3>2. State 사용법 및 주의사항</h3>
+
+      <StateComponent2 />
+
+      <br />
+      <hr />
+
+      <h3>5. State를 하위 컴포넌트의 전달값으로 넘기기</h3>
+
+      <StateComponent6 str={str} setStr={setStr} />
+      {/* 전달값으로 함수도 전달 가능 */}
+
+      <br />
+
+      <h4>APP에서 str 출력 : {str}</h4>
+      {/* 
+        어느 컴포넌트에서든 setter를 호출해서 State 변수를 변경하면
+        해당 State 변수를 가지고 있는 모든 컴포넌트에 변경된 값이 반영됨
+      */}
+
+      <button onClick={() => setStr("After")}>APP에서 str 변경</button>
+      {/* 
+        State 변수는 새로고침하면 초기값으로 돌아감
+      */}
+
+      <br />
+      <hr />
+
+      {/* State 종합 연습 문제 */}
+      <h4>댓글 기능 구현</h4>
+
+      {/* 댓글 작성용 컴포넌트 */}
+      <ReplyInsertComponent replyList={replyList} setReplyList={setReplyList} />
+
+      {/* 댓글 목록 출력용 컴포넌트 */}
+      <ReplyListComponent replyList={replyList} />
 
     </div>    
   );

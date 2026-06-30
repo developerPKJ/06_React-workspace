@@ -24,6 +24,10 @@ function StateComponent1() {
 
         // State 사용 후
         setCount(count + 1);
+
+        console.log(count);
+        // setCount가 비동기적으로 동작하기 때문에
+        // 바로 console.log(count)를 찍으면 이전 값이 출력됨
     };
 
     // return 구문
