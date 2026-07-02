@@ -14,6 +14,9 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import MemberEnrollFormComponent from "./MemberEnrollFormComponent";
 import LoginFormComponent from "./LoginFormComponent";
 
+import TestComponent1 from "./TestComponent1";
+import TestComponent2 from "./TestComponent2";
+
 function App() {
   
   // 실행할 코드
@@ -193,7 +196,49 @@ function App() {
 
       <h3>3. 화면 깜빡임 없이 URL 주소 전환 시 전달값 넘기고 받기</h3>
 
-      
+      <p>
+        - 마찬가지로 navigate 함수를 통해 URL 요청 시 전달값을 다른 컴포넌트로 넘길 수 있다. <br />
+
+        {/* 
+          // 우선 navigate 함수를 useNavigate 함수로 얻어낸다.
+
+          1. 전달값이 없을 경우
+          navigate("요청할 URL 주소");
+
+          2_1. 전달값이 있을 경우 - URL 주소 상에 전달값을 노출 X
+          navigate("요청할 URL 주소", { state: { 전달값1: 값1, 전달값2: 값2 } });
+
+          2_2. 전달값이 있을 경우 - URL 주소 상에 전달값을 노출 O
+          navigate("요청할 URL 주소/전달값1/전달값2");
+          - URL 주소 내에 Path Variable 방식으로 전달값을 같이 작성
+        */}
+      </p>
+
+      <button onClick={ () => 
+        navigate("/test1", { state: { id: "abc123", name: "홍길동" } })
+      }>요청 시 전달값 넘겨보기1</button>
+
+      <button onClick={ () => 
+        navigate("/test2/123456")
+      }>요청 시 전달값 넘겨보기2</button>
+
+      <br />
+
+      <Routes>
+        <Route path="/test1" element={ <TestComponent1 /> }></Route>
+        <Route path="/test2/:noticeNo" element={ <TestComponent2 /> }></Route>
+      </Routes>
+
+      {/* 
+        참고
+        - State를 사용하는 경우 useState 함수 사용
+        - navigate 사용하는 경우 useNavigate 함수 사용
+        - location 사용하는 경우 useLocation 함수 사용
+        - params 사용하는 경우 useParams 함수 사용
+
+        - react 에서 기본적으로 제공하는 내장함수들은 함수명이 use 로 시작하는 경우가 많음
+        > hook 이라고 부름 (리액트 훅)
+      */}
 
     </div>
   )
